@@ -1,1 +1,1 @@
-# Bookshop-react-native
+# Bookshop react-native application
