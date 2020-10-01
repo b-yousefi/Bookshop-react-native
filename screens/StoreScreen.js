@@ -7,13 +7,16 @@ import {
   FlatList,
   ActivityIndicator,
   Dimensions,
+  Button,
 } from "react-native";
 
 import DrawerHeaderButton from "../components/UI/DrawerHeaderButton";
 import BookItem from "../components/shop/BookItem";
 import * as booksActions from "../store/actions/actions_book";
+import Colors from "../constants/Colors";
 
 const StoreScreen = (props) => {
+  const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
@@ -22,14 +25,26 @@ const StoreScreen = (props) => {
 
   const loadBooks = useCallback(async () => {
     setError(null);
-    setIsRefreshing(true);
+    setIsLoading(true);
     try {
       await dispatch(booksActions.fetchBooks());
+      setPage(2);
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsLoading(false);
+  }, [dispatch, setError, setIsLoading]);
+
+  const loadMore = async () => {
+    setIsRefreshing(true);
+    try {
+      await dispatch(booksActions.filterBooksByPage(page));
+      setPage((currentPage) => currentPage + 1);
     } catch (err) {
       setError(err.message);
     }
     setIsRefreshing(false);
-  }, [dispatch, setError, setIsLoading]);
+  };
 
   useEffect(() => {
     const willFocusSub = props.navigation.addListener("willFocus", loadBooks);
@@ -57,7 +72,7 @@ const StoreScreen = (props) => {
     );
   }
 
-  if (!isLoading && !books) {
+  if (!isLoading && (!books || books.length === 0)) {
     return (
       <View style={styles.centered}>
         <Text>No Books found. Maybe start adding some!</Text>
@@ -84,6 +99,8 @@ const StoreScreen = (props) => {
       refreshing={isRefreshing}
       numColumns={Dimensions.get("window").width > 380 ? 2 : 1}
       data={books}
+      onEndReached={loadMore}
+      onEndReachedThreshold={0}
       renderItem={(itemData) => (
         <BookItem
           title={itemData.item.name}

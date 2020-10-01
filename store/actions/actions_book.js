@@ -59,7 +59,7 @@ export function filterBooks() {
 }
 
 export function filterBooksByPage(page) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const filter = getState().filter;
     const url =
       `${BOOK_URL}/filter?publicationIds=${filter.publicationIds.map(
@@ -69,26 +69,21 @@ export function filterBooksByPage(page) {
         (f) => f.id
       )}&authorIds=${filter.authorIds.map((f) => f.id)}` +
       `&page=${page - 1}&size=${PAGE_SIZE}`;
-
-    axios
-      .get(url)
-      .then((response) => {
-        dispatch({
-          type: BOOK_ACTIONS.FILTER,
-          payload: response,
-          filter: Object.assign({}, filter),
-        });
-      })
-      .catch((error) => {
-        dispatch(setError(error.response, BOOK_ACTIONS.FILTER));
+    try {
+      const response = await axios.get(url);
+      dispatch({
+        type: BOOK_ACTIONS.FILTER,
+        payload: response,
+        filter: Object.assign({}, filter),
       });
+    } catch (err) {
+      dispatch(setError(err, BOOK_ACTIONS.FETCH));
+    }
   };
 }
 
 export function fetchBooks() {
-  return (dispatch) => {
-    dispatch(
-      filterBooks({ publicationIds: [], categoryIds: [], authorIds: [] })
-    );
+  return async (dispatch) => {
+    await dispatch(filterBooksByPage(1));
   };
 }

@@ -1,8 +1,10 @@
 import { BOOK_ACTIONS } from "../actions/actions_book";
 import Book from "../../models/Book";
+import Page from "../../models/Page";
 
 const initialState = {
   books: [],
+  page: {},
 };
 
 export function BooksReducer(state = initialState, action) {
@@ -12,7 +14,8 @@ export function BooksReducer(state = initialState, action) {
         action.payload.data._embedded &&
         action.payload.data._embedded.books
       ) {
-        const books = action.payload.data._embedded.books;
+        const { books } = action.payload.data._embedded;
+        const { page } = action.payload.data;
         const loadedData = [];
         for (const book of books) {
           loadedData.push(
@@ -31,11 +34,25 @@ export function BooksReducer(state = initialState, action) {
             )
           );
         }
-        return {
-          books: loadedData,
-          filter: action.filter,
-          page: action.payload.data.page,
-        };
+        const pageObj = new Page(
+          page.size,
+          page.totalElements,
+          page.totalPages,
+          page.number
+        );
+        if (pageObj.number === 0) {
+          return {
+            books: loadedData,
+            filter: action.filter,
+            page: pageObj,
+          };
+        } else {
+          return {
+            books: state.books.concat(loadedData),
+            filter: action.filter,
+            page: pageObj,
+          };
+        }
       } else {
         return { map: null, filter: action.filter };
       }
