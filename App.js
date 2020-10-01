@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { createStore, combineReducers } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import { StyleSheet } from "react-native";
+import ReduxPromise from "redux-promise";
+import ReduxThunk from "redux-thunk";
 
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 
+import RootReducer from "./store/reducers/index";
 import BookshopNavigator from "./navigation/BookshopNavigator";
-import BooksReducer from "./store/reducers/BookReducer";
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -16,11 +17,10 @@ const fetchFonts = () => {
   });
 };
 
-const rootReducer = combineReducers({
-  books: BooksReducer,
-});
-
-const store = createStore(rootReducer);
+const store = createStore(
+  RootReducer,
+  applyMiddleware(ReduxPromise, ReduxThunk)
+);
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
