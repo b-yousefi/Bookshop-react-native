@@ -13,18 +13,16 @@ export const AUTHOR_ACTIONS = {
 };
 
 export function fetchAuthors() {
-  return (dispatch) => {
-    axios
-      .get(Author_URL)
-      .then((response) => {
-        dispatch({
-          type: AUTHOR_ACTIONS.FETCH,
-          payload: response,
-        });
-      })
-      .catch((error) => {
-        dispatch(setError(error.response, AUTHOR_ACTIONS.FETCH));
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(Author_URL);
+      dispatch({
+        type: AUTHOR_ACTIONS.FETCH,
+        payload: response,
       });
+    } catch (error) {
+      dispatch(setError(error.response, AUTHOR_ACTIONS.FETCH));
+    }
   };
 }
 

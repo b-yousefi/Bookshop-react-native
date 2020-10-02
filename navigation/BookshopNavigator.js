@@ -14,6 +14,7 @@ import AuthorsScreen from "../screens/AuthorsScreen";
 import PublicationsScreen from "../screens/PublicationsScreen";
 import AboutScreen from "../screens/AboutScreen";
 import PublicationDetailScreen from "../screens/PublicationDetailScreen";
+import AuthorDetailScreen from "../screens/AuthorDetialScreen";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -63,6 +64,7 @@ const CategoriesNavigator = createStackNavigator(
 const AuthorsNavigator = createStackNavigator(
   {
     Authors: AuthorsScreen,
+    AuthorDetail: AuthorDetailScreen,
   },
   {
     navigationOptions: {
