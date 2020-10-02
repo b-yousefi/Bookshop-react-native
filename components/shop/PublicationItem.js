@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TouchableOpacity,
   TouchableNativeFeedback,
@@ -10,9 +9,10 @@ import {
   Dimensions,
 } from "react-native";
 
+import Anchor from "../UI/Anchor ";
 import Card from "../UI/Card";
 
-const BookItem = (props) => {
+const PublicationItem = (props) => {
   let TouchableCmp = TouchableOpacity;
 
   if (Platform.OS === "android" && Platform.Version >= 21) {
@@ -20,19 +20,15 @@ const BookItem = (props) => {
   }
 
   return (
-    <Card style={styles.book}>
+    <Card style={styles.publication}>
       <View style={styles.touchable}>
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View>
-            <View style={styles.imageContainer}>
-              <Image
-                style={styles.image}
-                source={{ uri: `data:image/jpeg;base64,${props.image.data}` }}
-              />
-            </View>
             <View style={styles.details}>
               <Text style={styles.title}>{props.title}</Text>
-              <Text style={styles.price}>${props.price.toFixed(2)}</Text>
+              <Anchor href={props.url} style={styles.url}>
+                Go to Website
+              </Anchor>
             </View>
             <View style={styles.actions}>{props.children}</View>
           </View>
@@ -43,31 +39,20 @@ const BookItem = (props) => {
 };
 
 const styles = StyleSheet.create({
-  book: {
-    height: Dimensions.get("window").height / 2.4,
+  publication: {
+    height: 150,
     margin: 10,
-    width: Dimensions.get("window").width > 380 ? "45%" : "95%",
+    width: "95%",
+    alignSelf: "center",
+    maxWidth: 400,
   },
   touchable: {
     borderRadius: 10,
     overflow: "hidden",
   },
-  imageContainer: {
-    width: "100%",
-    height: "60%",
-    alignItems: "center",
-    alignContent: "center",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    overflow: "hidden",
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-  },
   details: {
     alignItems: "center",
-    height: "17%",
+    height: "70%",
     padding: 10,
   },
   title: {
@@ -75,18 +60,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginVertical: 2,
   },
-  price: {
+  url: {
     fontFamily: "open-sans",
     fontSize: 14,
-    color: "#888",
   },
   actions: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     height: "23%",
     paddingHorizontal: 20,
   },
 });
 
-export default BookItem;
+export default PublicationItem;

@@ -3,7 +3,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { MaterialIcons } from "@expo/vector-icons";
 import { Platform, Text } from "react-native";
 
 import Colors from "../constants/Colors";
@@ -13,6 +13,7 @@ import CategoriesScreen from "../screens/CategoriesScreen";
 import AuthorsScreen from "../screens/AuthorsScreen";
 import PublicationsScreen from "../screens/PublicationsScreen";
 import AboutScreen from "../screens/AboutScreen";
+import PublicationDetailScreen from "../screens/PublicationDetailScreen";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -51,14 +52,10 @@ const CategoriesNavigator = createStackNavigator(
   },
   {
     navigationOptions: {
-        drawerIcon: (drawerConfig) => (
-          <MaterialIcons
-            name="class"
-            size={23}
-            color={drawerConfig.tintColor}
-          />
-        ),
-      },
+      drawerIcon: (drawerConfig) => (
+        <MaterialIcons name="class" size={23} color={drawerConfig.tintColor} />
+      ),
+    },
     defaultNavigationOptions: defaultStackNavOptions,
   }
 );
@@ -69,14 +66,14 @@ const AuthorsNavigator = createStackNavigator(
   },
   {
     navigationOptions: {
-        drawerIcon: (drawerConfig) => (
-          <Ionicons
-            name={Platform.OS === "android" ? "md-people" : "ios-people"}
-            size={23}
-            color={drawerConfig.tintColor}
-          />
-        ),
-      },
+      drawerIcon: (drawerConfig) => (
+        <Ionicons
+          name={Platform.OS === "android" ? "md-people" : "ios-people"}
+          size={23}
+          color={drawerConfig.tintColor}
+        />
+      ),
+    },
     defaultNavigationOptions: defaultStackNavOptions,
   }
 );
@@ -84,6 +81,7 @@ const AuthorsNavigator = createStackNavigator(
 const PublicationsNavigator = createStackNavigator(
   {
     Publications: PublicationsScreen,
+    PublicationDetail: PublicationDetailScreen,
   },
   {
     defaultNavigationOptions: defaultStackNavOptions,

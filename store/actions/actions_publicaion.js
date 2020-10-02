@@ -13,18 +13,16 @@ export const PUBLICATION_ACTIONS = {
 };
 
 export function fetchPublications() {
-  return (dispatch) => {
-    axios
-      .get(PUBLICATION_URL)
-      .then((response) => {
-        dispatch({
-          type: PUBLICATION_ACTIONS.FETCH,
-          payload: response,
-        });
-      })
-      .catch((error) => {
-        dispatch(setError(error.response, PUBLICATION_ACTIONS.FETCH));
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(PUBLICATION_URL);
+      dispatch({
+        type: PUBLICATION_ACTIONS.FETCH,
+        payload: response,
       });
+    } catch (err) {
+      dispatch(setError(error.response, PUBLICATION_ACTIONS.FETCH));
+    }
   };
 }
 
