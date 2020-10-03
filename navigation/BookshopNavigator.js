@@ -15,6 +15,7 @@ import PublicationsScreen from "../screens/PublicationsScreen";
 import AboutScreen from "../screens/AboutScreen";
 import PublicationDetailScreen from "../screens/PublicationDetailScreen";
 import AuthorDetailScreen from "../screens/AuthorDetialScreen";
+import BookDetailScreen from "../screens/BookDetailScreen";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -32,6 +33,7 @@ const defaultStackNavOptions = {
 const StoreNavigator = createStackNavigator(
   {
     Store: StoreScreen,
+    BookDetail: BookDetailScreen,
   },
   {
     navigationOptions: {

@@ -31,7 +31,9 @@ const BookItem = (props) => {
               />
             </View>
             <View style={styles.details}>
-              <Text style={styles.title}>{props.title}</Text>
+              <Text style={styles.title} numberOfLines={1}>
+                {props.title}
+              </Text>
               <Text style={styles.price}>${props.price.toFixed(2)}</Text>
             </View>
             <View style={styles.actions}>{props.children}</View>
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: "100%",
-    height: "60%",
+    height: "55%",
     alignItems: "center",
     alignContent: "center",
     borderTopLeftRadius: 10,
@@ -84,7 +86,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    height: "23%",
+    height: "28%",
     paddingHorizontal: 20,
   },
 });

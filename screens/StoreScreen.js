@@ -58,8 +58,8 @@ const StoreScreen = (props) => {
     props.navigation.navigate({
       routeName: "BookDetail",
       params: {
-        BookId: id,
-        BookTitle: title,
+        bookId: id,
+        bookTitle: title,
       },
     });
   };
@@ -107,23 +107,27 @@ const StoreScreen = (props) => {
           image={itemData.item.picture}
           price={itemData.item.price}
           onSelect={() => {
-            selectItemHandler(itemData.item.id, itemData.item.title);
+            selectItemHandler(itemData.item.id, itemData.item.name);
           }}
         >
-          {/* <Button
-            color={Colors.primary}
-            title="View Details"
-            onPress={() => {
-              selectItemHandler(itemData.item.id, itemData.item.title);
-            }}
-          />
-          <Button
-            color={Colors.primary}
-            title="To Cart"
-            onPress={() => {
-              dispatch(cartActions.addToCart(itemData.item));
-            }}
-          /> */}
+          <View style={styles.button}>
+            <Button
+              color={Colors.primary}
+              title="View Details"
+              onPress={() => {
+                selectItemHandler(itemData.item.id, itemData.item.name);
+              }}
+            />
+          </View>
+          <View style={styles.button}>
+            <Button
+              color={Colors.primary}
+              title="To Cart"
+              onPress={() => {
+                // dispatch(cartActions.addToCart(itemData.item));
+              }}
+            />
+          </View>
         </BookItem>
       )}
     />
@@ -132,6 +136,7 @@ const StoreScreen = (props) => {
 
 const styles = StyleSheet.create({
   centered: { flex: 1, justifyContent: "center", alignItems: "center" },
+  button: { width: 120 },
 });
 
 export default StoreScreen;

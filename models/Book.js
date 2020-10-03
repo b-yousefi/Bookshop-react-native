@@ -1,3 +1,5 @@
+import moment from "moment";
+
 class Book {
   constructor(
     id,
@@ -23,6 +25,12 @@ class Book {
     this.picture = picture;
     this.price = price;
     this.quantity = quantity;
+  }
+
+  get readablePublishedDay() {
+    return this.publishedDay
+      ? moment(this.publishedDay).format("MMMM Do YYYY")
+      : undefined;
   }
 }
 
