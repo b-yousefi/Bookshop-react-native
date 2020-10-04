@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "react-navigation-stack";
-import { createAppContainer } from "react-navigation";
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -16,6 +16,7 @@ import AboutScreen from "../screens/AboutScreen";
 import PublicationDetailScreen from "../screens/PublicationDetailScreen";
 import AuthorDetailScreen from "../screens/AuthorDetialScreen";
 import BookDetailScreen from "../screens/BookDetailScreen";
+import AuthScreen from "../screens/AuthScreen";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -101,7 +102,7 @@ const AboutNavigator = createStackNavigator(
   }
 );
 
-const MainNavigator = createDrawerNavigator(
+const ShopNavigator = createDrawerNavigator(
   {
     Store: StoreNavigator,
     Categories: CategoriesNavigator,
@@ -118,5 +119,20 @@ const MainNavigator = createDrawerNavigator(
     },
   }
 );
+
+const AuthNavigator = createStackNavigator(
+  {
+    Auth: AuthScreen,
+  },
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
+
+const MainNavigator = createSwitchNavigator({
+  // Startup: StartupScreen,
+  Auth: AuthNavigator,
+  Shop: ShopNavigator,
+});
 
 export default createAppContainer(MainNavigator);

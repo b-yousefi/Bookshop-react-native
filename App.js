@@ -3,12 +3,17 @@ import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import ReduxPromise from "redux-promise";
 import ReduxThunk from "redux-thunk";
+import axios from "axios";
 
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 
 import RootReducer from "./store/reducers/index";
 import BookshopNavigator from "./navigation/BookshopNavigator";
+
+axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.patch["Content-Type"] = "application/json";
+axios.defaults.headers.put["Content-Type"] = "application/json";
 
 const fetchFonts = () => {
   return Font.loadAsync({
