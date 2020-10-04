@@ -1,6 +1,6 @@
 import axios from "axios";
+import { AsyncStorage } from "react-native";
 import { setError, setSucc } from "./actions";
-// import {clearShoppingCart} from './actions_shopping_cart';
 import Vars from "../../env";
 
 const USER_URL = `${Vars.REACT_APP_API_URL}/api/users`;
@@ -16,11 +16,23 @@ export const USER_ACTIONS = {
 
 export function fetchUser(username) {
   const url = `${USER_URL}/search/findUser?username=${username}`;
-  const request = axios.get(url);
+  return async (dispatch) => {
+    const response = await axios.get(url);
 
-  return {
-    type: USER_ACTIONS.FETCH,
-    payload: request,
+    dispatch({
+      type: USER_ACTIONS.FETCH,
+      payload: response,
+    });
+  };
+}
+
+export function authenticate(username, token) {
+  axios.defaults.headers.common["Authorization"] = token;
+  return async (dispatch) => {
+    dispatch({
+      type: USER_ACTIONS.LOGIN,
+      payload: { username, token },
+    });
   };
 }
 
@@ -34,12 +46,9 @@ export function loginUser(username, password) {
         data: JSON.stringify({ username, password }),
       });
       const token = `Token ${response.data.token}`;
-      axios.defaults.headers.common["Authorization"] = token;
+      saveDataToStorage(username, token);
+      authenticate(username, token);
       dispatch(fetchUser(username));
-      dispatch({
-        type: USER_ACTIONS.LOGIN,
-        payload: { username, token },
-      });
     } catch (err) {
       throw err;
     }
@@ -49,11 +58,11 @@ export function loginUser(username, password) {
 export function logoutUser() {
   delete axios.defaults.headers.common["Authorization"];
   return (dispatch) => {
+    AsyncStorage.removeItem("userData");
     dispatch({
       type: USER_ACTIONS.LOGOUT,
       payload: "",
     });
-    // dispatch(clearShoppingCart());
   };
 }
 
@@ -94,3 +103,13 @@ export function updateUser(user) {
       });
   };
 }
+
+const saveDataToStorage = (username, token) => {
+  AsyncStorage.setItem(
+    "userData",
+    JSON.stringify({
+      token,
+      username,
+    })
+  );
+};

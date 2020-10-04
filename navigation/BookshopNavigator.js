@@ -1,10 +1,15 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
-import { createDrawerNavigator } from "react-navigation-drawer";
+import {
+  createDrawerNavigator,
+  DrawerNavigatorItems,
+} from "react-navigation-drawer";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Platform, Text } from "react-native";
+import { Platform, SafeAreaView, View, Button, Text } from "react-native";
+import { IconButton } from "react-native-paper";
 
 import Colors from "../constants/Colors";
 
@@ -17,6 +22,9 @@ import PublicationDetailScreen from "../screens/PublicationDetailScreen";
 import AuthorDetailScreen from "../screens/AuthorDetialScreen";
 import BookDetailScreen from "../screens/BookDetailScreen";
 import AuthScreen from "../screens/AuthScreen";
+import StartupScreen from "../screens/StartupScreen";
+
+import * as userActions from "../store/actions/actions_user";
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -117,6 +125,24 @@ const ShopNavigator = createDrawerNavigator(
         fontFamily: "open-sans-bold",
       },
     },
+    contentComponent: (props) => {
+      const dispatch = useDispatch();
+      console.log(props.navigationOptions);
+      return (
+        <View style={{ flex: 1, paddingTop: 20 }}>
+          <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
+            <DrawerNavigatorItems {...props} />
+            <IconButton
+              icon="logout"
+              title="logout"
+              color={Colors.primaryColor}
+              size={23}
+              onPress={() => dispatch(userActions.logoutUser())}
+            />
+          </SafeAreaView>
+        </View>
+      );
+    },
   }
 );
 
@@ -130,7 +156,7 @@ const AuthNavigator = createStackNavigator(
 );
 
 const MainNavigator = createSwitchNavigator({
-  // Startup: StartupScreen,
+  Startup: StartupScreen,
   Auth: AuthNavigator,
   Shop: ShopNavigator,
 });
