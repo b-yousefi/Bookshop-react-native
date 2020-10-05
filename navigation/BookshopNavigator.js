@@ -23,6 +23,7 @@ import AuthorDetailScreen from "../screens/AuthorDetialScreen";
 import BookDetailScreen from "../screens/BookDetailScreen";
 import AuthScreen from "../screens/AuthScreen";
 import StartupScreen from "../screens/StartupScreen";
+import CategoryDetailScreen from "../screens/CategoryDetailScreen";
 
 import * as userActions from "../store/actions/actions_user";
 
@@ -61,6 +62,7 @@ const StoreNavigator = createStackNavigator(
 const CategoriesNavigator = createStackNavigator(
   {
     Categories: CategoriesScreen,
+    CategoryDetail: CategoryDetailScreen,
   },
   {
     navigationOptions: {
@@ -127,7 +129,6 @@ const ShopNavigator = createDrawerNavigator(
     },
     contentComponent: (props) => {
       const dispatch = useDispatch();
-      console.log(props.navigationOptions);
       return (
         <View style={{ flex: 1, paddingTop: 20 }}>
           <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>

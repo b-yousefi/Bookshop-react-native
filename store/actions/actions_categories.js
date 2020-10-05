@@ -1,5 +1,4 @@
 import axios from "axios";
-import { setError } from "../actions/actions";
 import Vars from "../../env";
 
 const Category_URL = `${Vars.REACT_APP_API_URL}/api/categories`;
@@ -12,20 +11,17 @@ export const CAT_ACTIONS = {
   SELECT: "CAT_SELECT",
 };
 
-export function fetchCategories() {
-  const url = `${Category_URL}/allcategories`;
-  return (dispatch) => {
-    axios
-      .get(url)
-      .then((response) => {
-        dispatch({
-          type: CAT_ACTIONS.FETCH,
-          payload: response,
-        });
-      })
-      .catch((error) => {
-        dispatch(setError(error.response, CAT_ACTIONS.FETCH));
+export function fetchCategory(url = `${Category_URL}`) {
+  return async (dispatch) => {
+    try {
+      const response = axios.get(url);
+      dispatch({
+        type: CAT_ACTIONS.FETCH,
+        payload: response,
       });
+    } catch (err) {
+      throw err;
+    }
   };
 }
 
