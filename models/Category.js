@@ -1,9 +1,9 @@
 class Category {
-  constructor(name, description, link, subCategoreisLink) {
+  constructor(id, name, description, parent) {
+    this.id = id;
     this.name = name;
     this.description = description;
-    this.link = link;
-    this.subCategoreisLink = subCategoreisLink;
+    this.parent = parent;
   }
 }
 

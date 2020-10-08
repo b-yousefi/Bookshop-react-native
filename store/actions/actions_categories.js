@@ -11,10 +11,11 @@ export const CAT_ACTIONS = {
   SELECT: "CAT_SELECT",
 };
 
-export function fetchCategory(url = `${Category_URL}`) {
+export function fetchCategory() {
+  const url = `${Category_URL}/allcategories`;
   return async (dispatch) => {
     try {
-      const response = axios.get(url);
+      const response = await axios.get(url);
       dispatch({
         type: CAT_ACTIONS.FETCH,
         payload: response,

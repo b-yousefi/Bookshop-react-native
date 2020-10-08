@@ -13,12 +13,16 @@ import Colors from "../constants/Colors";
 import DrawerHeaderButton from "../components/UI/DrawerHeaderButton";
 import CategoryGridTile from "../components/shop/CategoryGridTile";
 import * as categoriesActions from "../store/actions/actions_categories";
+import { isNull } from "lodash";
 
 const CategoriesScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
-  const categories = useSelector((state) => state.categories.categories_arr);
+  const categories = useSelector((state) =>
+    state.categories.categories_arr.filter((category) => !category.parent)
+  );
+
   const colors = [
     "#f5428d",
     "#f54242",
@@ -34,14 +38,12 @@ const CategoriesScreen = (props) => {
   const dispatch = useDispatch();
   const loadCategories = useCallback(async () => {
     setError(null);
-    setIsLoading(true);
     setIsRefreshing(true);
     try {
       await dispatch(categoriesActions.fetchCategory());
     } catch (err) {
       setError(err.message);
     }
-    setIsLoading(false);
     setIsRefreshing(false);
   }, [dispatch, setError, setIsRefreshing, setIsLoading]);
 
@@ -55,6 +57,13 @@ const CategoriesScreen = (props) => {
       willFocusSub.remove();
     };
   }, [loadCategories]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    loadCategories().then(() => {
+      setIsLoading(false);
+    });
+  }, [dispatch, loadCategories]);
 
   if (isLoading) {
     return (
@@ -87,7 +96,6 @@ const CategoriesScreen = (props) => {
 
   return (
     <FlatList
-      keyExtractor={(item) => item.link}
       onRefresh={loadCategories}
       numColumns={2}
       refreshing={isRefreshing}
@@ -101,7 +109,7 @@ const CategoriesScreen = (props) => {
             props.navigation.navigate({
               routeName: "CategoryDetail",
               params: {
-                categoryLink: itemData.item.link,
+                categoryId: itemData.item.id,
                 categoryTitle: itemData.item.name,
               },
             });
