@@ -24,13 +24,13 @@ const PublicationsScreen = (props) => {
 
   const loadPublications = useCallback(async () => {
     setError(null);
-    setIsLoading(true);
+    setIsRefreshing(true);
     try {
       await dispatch(publicationsActions.fetchPublications());
     } catch (err) {
       setError(err.message);
     }
-    setIsLoading(false);
+    setIsRefreshing(false);
   }, [dispatch, setError, setIsLoading]);
 
   useEffect(() => {
@@ -43,6 +43,13 @@ const PublicationsScreen = (props) => {
       willFocusSub.remove();
     };
   }, [loadPublications]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    loadPublications().then(() => {
+      setIsLoading(false);
+    });
+  }, [dispatch, loadPublications]);
 
   if (isLoading) {
     return (

@@ -24,14 +24,12 @@ const AuthorsScreen = (props) => {
 
   const loadAuthors = useCallback(async () => {
     setError(null);
-    setIsLoading(true);
     setIsRefreshing(true);
     try {
       await dispatch(authorsActions.fetchAuthors());
     } catch (err) {
       setError(err.message);
     }
-    setIsLoading(false);
     setIsRefreshing(false);
   }, [dispatch, setError, setIsLoading]);
 
@@ -42,6 +40,13 @@ const AuthorsScreen = (props) => {
       willFocusSub.remove();
     };
   }, [loadAuthors]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    loadAuthors().then(() => {
+      setIsLoading(false);
+    });
+  }, [dispatch, loadAuthors]);
 
   const selectItemHandler = (id, title) => {
     props.navigation.navigate({

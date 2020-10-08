@@ -25,14 +25,14 @@ const StoreScreen = (props) => {
 
   const loadBooks = useCallback(async () => {
     setError(null);
-    setIsLoading(true);
+    setIsRefreshing(true);
     try {
       await dispatch(booksActions.fetchBooks());
       setPage(2);
     } catch (err) {
       setError(err.message);
     }
-    setIsLoading(false);
+    setIsRefreshing(false);
   }, [dispatch, setError, setIsLoading]);
 
   const loadMore = async () => {
@@ -53,6 +53,13 @@ const StoreScreen = (props) => {
       willFocusSub.remove();
     };
   }, [loadBooks]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    loadBooks().then(() => {
+      setIsLoading(false);
+    });
+  }, [dispatch, loadBooks]);
 
   const selectItemHandler = (id, title) => {
     props.navigation.navigate({

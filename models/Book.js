@@ -14,7 +14,7 @@ class Book {
     price,
     quantity
   ) {
-    this.id = id;
+    this.id = id.toString();
     this.name = name;
     this.publishedDay = publishedDay;
     this.authorIds = authorIds;
