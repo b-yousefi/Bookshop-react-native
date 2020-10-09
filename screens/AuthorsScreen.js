@@ -34,10 +34,10 @@ const AuthorsScreen = (props) => {
   }, [dispatch, setError, setIsLoading]);
 
   useEffect(() => {
-    const willFocusSub = props.navigation.addListener("willFocus", loadAuthors);
+    const unsubscribe = props.navigation.addListener("focus", loadAuthors);
 
     return () => {
-      willFocusSub.remove();
+      unsubscribe();
     };
   }, [loadAuthors]);
 
@@ -50,7 +50,7 @@ const AuthorsScreen = (props) => {
 
   const selectItemHandler = (id, title) => {
     props.navigation.navigate({
-      routeName: "AuthorDetail",
+      name: "AuthorDetail",
       params: {
         authorId: id,
         authorTitle: title,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
 
 export default AuthorsScreen;
 
-AuthorsScreen.navigationOptions = (navData) => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: "Authors",
     headerLeft: () => <DrawerHeaderButton navigation={navData.navigation} />,

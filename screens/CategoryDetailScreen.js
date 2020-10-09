@@ -16,7 +16,7 @@ import CategoryItem from "../components/shop/CategoryItem";
 import Colors from "../constants/Colors";
 
 const CategoryDetailScreen = (props) => {
-  const categoryId = props.navigation.getParam("categoryId");
+  const categoryId = props.route.params.categoryId;
 
   const categories = useSelector((state) =>
     state.categories.categories_arr.filter(
@@ -79,8 +79,8 @@ const styles = StyleSheet.create({
 
 export default CategoryDetailScreen;
 
-CategoryDetailScreen.navigationOptions = (navData) => {
-  const title = navData.navigation.getParam("categoryTitle");
+export const screenOptions = (navData) => {
+  const title = navData.route.params.categoryTitle;
 
   return {
     headerTitle: title,

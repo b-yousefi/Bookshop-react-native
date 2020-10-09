@@ -9,7 +9,7 @@ import * as Font from "expo-font";
 import { AppLoading } from "expo";
 
 import RootReducer from "./store/reducers/index";
-import NavigationContainer from "./navigation/NavigationContainer";
+import AppNavigator from "./navigation/AppNavigator";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.patch["Content-Type"] = "application/json";
@@ -41,7 +41,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <NavigationContainer />
+      <AppNavigator />
     </Provider>
   );
 }

@@ -47,10 +47,10 @@ const StoreScreen = (props) => {
   };
 
   useEffect(() => {
-    const willFocusSub = props.navigation.addListener("willFocus", loadBooks);
+    const unsubscribe = props.navigation.addListener("focus", loadBooks);
 
     return () => {
-      willFocusSub.remove();
+      unsubscribe();
     };
   }, [loadBooks]);
 
@@ -63,7 +63,7 @@ const StoreScreen = (props) => {
 
   const selectItemHandler = (id, title) => {
     props.navigation.navigate({
-      routeName: "BookDetail",
+      name: "BookDetail",
       params: {
         bookId: id,
         bookTitle: title,
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
 
 export default StoreScreen;
 
-StoreScreen.navigationOptions = (navData) => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: "Bookshop",
     headerLeft: () => <DrawerHeaderButton navigation={navData.navigation} />,

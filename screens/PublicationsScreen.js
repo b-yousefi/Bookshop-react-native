@@ -34,13 +34,13 @@ const PublicationsScreen = (props) => {
   }, [dispatch, setError, setIsLoading]);
 
   useEffect(() => {
-    const willFocusSub = props.navigation.addListener(
-      "willFocus",
+    const unsubscribe = props.navigation.addListener(
+      "focuse",
       loadPublications
     );
 
     return () => {
-      willFocusSub.remove();
+      unsubscribe();
     };
   }, [loadPublications]);
 
@@ -82,7 +82,7 @@ const PublicationsScreen = (props) => {
 
   const selectItemHandler = (id, title) => {
     props.navigation.navigate({
-      routeName: "PublicationDetail",
+      name: "PublicationDetail",
       params: {
         publicationId: id,
         publicationTitle: title,
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
 
 export default PublicationsScreen;
 
-PublicationsScreen.navigationOptions = (navData) => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: "Publications",
     headerLeft: () => <DrawerHeaderButton navigation={navData.navigation} />,

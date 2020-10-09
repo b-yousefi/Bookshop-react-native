@@ -12,7 +12,7 @@ import {
 import Colors from "../constants/Colors";
 
 const BookDetailScreen = (props) => {
-  const bookId = props.navigation.getParam("bookId");
+  const bookId = props.route.params.bookId;
   const selectedBook = useSelector((state) =>
     state.books.books.find((book) => book.id === bookId)
   );
@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
 
 export default BookDetailScreen;
 
-BookDetailScreen.navigationOptions = (navData) => {
-  const title = navData.navigation.getParam("bookTitle");
+export const screenOptions = (navData) => {
+  const title = navData.route.params.bookTitle;
 
   return {
     headerTitle: title,

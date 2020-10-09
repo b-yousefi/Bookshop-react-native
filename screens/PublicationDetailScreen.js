@@ -5,7 +5,7 @@ import { View, Text, ScrollView, StyleSheet } from "react-native";
 import Anchor from "../components/UI/Anchor ";
 
 const PublicationDetailScreen = (props) => {
-  const publicationId = props.navigation.getParam("publicationId");
+  const publicationId = props.route.params.publicationId;
   const selectedPublication = useSelector((state) =>
     state.publications.find((publication) => publication.id === publicationId)
   );
@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
 
 export default PublicationDetailScreen;
 
-PublicationDetailScreen.navigationOptions = (navData) => {
-  const title = navData.navigation.getParam("publicationTitle");
+export const screenOptions = (navData) => {
+  const title = navData.route.params.publicationTitle;
 
   return {
     headerTitle: title,

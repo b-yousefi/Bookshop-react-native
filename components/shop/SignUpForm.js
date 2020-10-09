@@ -105,7 +105,7 @@ const SignUpForm = (props) => {
     );
     try {
       await dispatch(userActions.regsiterUser(newUser));
-      props.navigation.navigate("Shop");
+      // props.navigation.navigate("Shop");
     } catch (err) {
       setError(err.message);
       setIsLoading(false);

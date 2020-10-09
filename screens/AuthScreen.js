@@ -85,7 +85,7 @@ const AuthScreen = (props) => {
             formState.inputValues.password
           )
         );
-        props.navigation.navigate("Shop");
+        // props.navigation.navigate("Shop");
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
@@ -183,6 +183,6 @@ const styles = StyleSheet.create({
 
 export default AuthScreen;
 
-AuthScreen.navigationOptions = {
+export const screenOptions = {
   headerTitle: "Authenticate",
 };

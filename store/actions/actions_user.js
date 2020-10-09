@@ -12,6 +12,13 @@ export const USER_ACTIONS = {
   REGISTER: "USER_REGISTER",
   LOGIN: "USER_LOGIN",
   LOGOUT: "USER_LOGOUT",
+  SET_DID_TRY_AL: "SET_DID_TRY_AL",
+};
+
+export const setDidTryAL = () => {
+  return {
+    type: USER_ACTIONS.SET_DID_TRY_AL,
+  };
 };
 
 export function fetchUser(username) {
@@ -47,7 +54,7 @@ export function loginUser(username, password) {
       });
       const token = `Token ${response.data.token}`;
       saveDataToStorage(username, token);
-      authenticate(username, token);
+      dispatch(authenticate(username, token));
       dispatch(fetchUser(username));
     } catch (err) {
       throw err;

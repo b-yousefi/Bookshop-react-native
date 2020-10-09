@@ -48,13 +48,10 @@ const CategoriesScreen = (props) => {
   }, [dispatch, setError, setIsRefreshing, setIsLoading]);
 
   useEffect(() => {
-    const willFocusSub = props.navigation.addListener(
-      "willFocus",
-      loadCategories
-    );
+    const unsubscribe = props.navigation.addListener("focus", loadCategories);
 
     return () => {
-      willFocusSub.remove();
+      unsubscribe();
     };
   }, [loadCategories]);
 
@@ -107,7 +104,7 @@ const CategoriesScreen = (props) => {
           color={colors[itemData.index % colors.length]}
           onSelect={() => {
             props.navigation.navigate({
-              routeName: "CategoryDetail",
+              name: "CategoryDetail",
               params: {
                 categoryId: itemData.item.id,
                 categoryTitle: itemData.item.name,
@@ -126,7 +123,7 @@ const styles = StyleSheet.create({
 
 export default CategoriesScreen;
 
-CategoriesScreen.navigationOptions = (navData) => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: "Categories",
     headerLeft: () => <DrawerHeaderButton navigation={navData.navigation} />,

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { View, Text, ScrollView, Image, StyleSheet } from "react-native";
 
 const AuthorDetailScreen = (props) => {
-  const authorId = props.navigation.getParam("authorId");
+  const authorId = props.route.params.authorId;
   const selectedAuthor = useSelector((state) =>
     state.authors.find((author) => author.id === authorId)
   );
@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
 
 export default AuthorDetailScreen;
 
-AuthorDetailScreen.navigationOptions = (navData) => {
-  const title = navData.navigation.getParam("authorTitle");
+export const screenOptions = (navData) => {
+  const title = navData.route.params.authorTitle;
 
   return {
     headerTitle: title,
