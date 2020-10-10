@@ -5,6 +5,7 @@ import { CategoriesReducer } from "./reducer_categories";
 import { AuthorsReducer } from "./reducer_authors";
 import { PublicationReducer } from "./reducer_publications";
 import { UserReducer } from "./reducer_user";
+import { OrdersReducer } from "./reducer_orders";
 
 const RootReducer = combineReducers({
   books: BooksReducer,
@@ -13,6 +14,7 @@ const RootReducer = combineReducers({
   authors: AuthorsReducer,
   publications: PublicationReducer,
   user: UserReducer,
+  orders: OrdersReducer,
 });
 
 export default RootReducer;

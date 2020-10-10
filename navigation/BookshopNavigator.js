@@ -38,10 +38,12 @@ import BookDetailScreen, {
 import AuthScreen, {
   screenOptions as authScreenOptions,
 } from "../screens/AuthScreen";
-import StartupScreen from "../screens/StartupScreen";
 import CategoryDetailScreen, {
   screenOptions as categoryDetailScreenOptions,
 } from "../screens/CategoryDetailScreen";
+import OrdersScreen, {
+  screenOptions as ordersScreenOptions,
+} from "../screens/OrdersScreen";
 
 import * as userActions from "../store/actions/actions_user";
 
@@ -136,6 +138,20 @@ export const CategoriesNavigator = () => {
   );
 };
 
+const OrderStackNavigator = createStackNavigator();
+
+export const OrdersNavigator = () => {
+  return (
+    <OrderStackNavigator.Navigator screenOptions={defaultStackNavOptions}>
+      <OrderStackNavigator.Screen
+        name="Orders"
+        component={OrdersScreen}
+        options={ordersScreenOptions}
+      />
+    </OrderStackNavigator.Navigator>
+  );
+};
+
 const AboutStackNavigator = createStackNavigator();
 
 export const AboutNavigator = () => {
@@ -215,6 +231,7 @@ export const ShopNavigator = () => {
         name="Publications"
         component={PublicationsNavigator}
       />
+      <ShopDrawerNavigator.Screen name="Orders" component={OrdersNavigator} />
       <ShopDrawerNavigator.Screen name="About" component={AboutNavigator} />
     </ShopDrawerNavigator.Navigator>
   );
@@ -233,20 +250,3 @@ export const AuthNavigator = () => {
     </AuthStackNavigator.Navigator>
   );
 };
-
-// const AuthNavigator = createStackNavigator(
-//   {
-//     Auth: AuthScreen,
-//   },
-//   {
-//     defaultNavigationOptions: defaultStackNavOptions,
-//   }
-// );
-
-// const MainNavigator = createSwitchNavigator({
-//   Startup: StartupScreen,
-//   Auth: AuthNavigator,
-//   Shop: ShopNavigator,
-// });
-
-// export default createAppContainer(MainNavigator);
