@@ -7,6 +7,16 @@ import OrderItem from "../components/shop/OrderItem";
 const ShoppingCartScreen = (props) => {
   const orderItems = useSelector((state) => state.shopping_cart.orderItems);
 
+  const selectItemHandler = (id, title) => {
+    props.navigation.navigate({
+      name: "BookDetail",
+      params: {
+        bookId: id,
+        bookTitle: title,
+      },
+    });
+  };
+
   return (
     <FlatList
       data={orderItems}
@@ -15,6 +25,11 @@ const ShoppingCartScreen = (props) => {
           bookName={itemData.item.book.name}
           quantity={itemData.item.quantity}
           image={itemData.item.book.picture}
+          price={itemData.item.book.price}
+          id={itemData.item.id}
+          onSelect={() => {
+            selectItemHandler(itemData.item.book.id, itemData.item.book.name);
+          }}
         />
       )}
     />

@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import {
   View,
   Text,
@@ -8,6 +9,9 @@ import {
   TouchableNativeFeedback,
   Platform,
 } from "react-native";
+import { IconButton, Colors } from "react-native-paper";
+
+import * as cartActions from "../../store/actions/actions_shopping_cart";
 
 import Card from "../UI/Card";
 
@@ -17,6 +21,8 @@ const OrderItem = (props) => {
   if (Platform.OS === "android" && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }
+
+  const dispatch = useDispatch();
 
   return (
     <Card style={styles.orderItemCard}>
@@ -30,8 +36,25 @@ const OrderItem = (props) => {
               />
             </View>
             <View style={styles.details}>
-              <Text style={styles.name}>{props.bookName}</Text>
-              <Text style={styles.quantity}>Quantity: {props.quantity}</Text>
+              <Text style={styles.name} numberOfLines={2}>
+                {props.bookName}
+              </Text>
+              <View style={styles.detailsCol}>
+                <View>
+                  <Text style={styles.quantity}>
+                    Quantity: {props.quantity}
+                  </Text>
+                  <Text style={styles.price}>Price: ${props.price}</Text>
+                </View>
+                <IconButton
+                  icon="delete-outline"
+                  color={Colors.red500}
+                  size={36}
+                  onPress={() => {
+                    dispatch(cartActions.deleteItemFromShoppingCart(props.id));
+                  }}
+                />
+              </View>
             </View>
           </View>
         </TouchableCmp>
@@ -42,8 +65,8 @@ const OrderItem = (props) => {
 
 const styles = StyleSheet.create({
   orderItemCard: {
-    height: 120,
-    margin: 5,
+    height: 150,
+    margin: 10,
     padding: 5,
     width: "95%",
     alignSelf: "center",
@@ -66,9 +89,20 @@ const styles = StyleSheet.create({
   },
   details: {
     padding: 5,
-    width: "100%",
+    width: "75%",
+  },
+  detailsCol: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   quantity: {
+    fontFamily: "open-sans",
+    fontSize: 14,
+    marginVertical: 2,
+    padding: 5,
+  },
+  price: {
     fontFamily: "open-sans",
     fontSize: 14,
     marginVertical: 2,
@@ -79,8 +113,7 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
     alignContent: "center",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    borderRadius: 10,
     overflow: "hidden",
   },
   image: {

@@ -1,7 +1,8 @@
 import axios from "axios";
 import { setSucc } from "./actions";
+import Vars from "../../env";
 
-const USER_URL = `${process.env.REACT_APP_API_URL}/api/users`;
+const USER_URL = `${Vars.REACT_APP_API_URL}/api/users`;
 
 export const SHOPPING_CART_ACTIONS = {
   FETCH: "SHOPPING_CART_FETCH",
@@ -29,18 +30,19 @@ export function clearShoppingCart() {
   };
 }
 
-export function updateShoppingCart(book, quantity) {
+export function updateShoppingCart(book) {
   return (dispatch, getState) => {
-    let orderItemId = null;
-    if (getState().shopping_cart.booksMap.has(book.id)) {
-      orderItemId = getState().shopping_cart.booksMap.get(book.id).orderItemId;
-    }
-    if (quantity === 0) {
-      dispatch(deleteItemFromShoppingCart(orderItemId, book.id));
-    } else if (orderItemId) {
-      dispatch(updateOrderItemInShoppingCart(orderItemId, book, quantity));
+    const orderItemIndex = getState().shopping_cart.orderItems.findIndex(
+      (orderItem) => orderItem.book.id === book.id
+    );
+
+    if (orderItemIndex === -1) {
+      dispatch(addItemToShoppingCart(book, 1));
     } else {
-      dispatch(addItemToShoppingCart(book, quantity));
+      const item = getState().shopping_cart.orderItems[orderItemIndex];
+      let quantity = item.quantity;
+      quantity++;
+      dispatch(updateOrderItemInShoppingCart(item.id, book, quantity));
     }
   };
 }
@@ -84,7 +86,7 @@ function addItemToShoppingCart(book, quantity) {
   };
 }
 
-function deleteItemFromShoppingCart(orderItemId, orderItemBookId) {
+export function deleteItemFromShoppingCart(orderItemId) {
   return async (dispatch, getState) => {
     const orderId = getState().shopping_cart.id;
     const userId = getState().user.id;
@@ -96,7 +98,6 @@ function deleteItemFromShoppingCart(orderItemId, orderItemBookId) {
       setSucc({
         type: SHOPPING_CART_ACTIONS.DELETE,
         orderItemId: orderItemId,
-        orderItemBookId: orderItemBookId,
       })
     );
   };

@@ -30,7 +30,8 @@ export function BooksReducer(state = initialState, action) {
               book.categoryIds,
               book.picture,
               book.price,
-              book.quantity
+              book.quantity,
+              book._links
             )
           );
         }

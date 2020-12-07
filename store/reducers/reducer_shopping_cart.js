@@ -26,15 +26,20 @@ export function ShoppingCartReducer(state = null, action) {
     case SHOPPING_CART_ACTIONS.ADD:
     case SHOPPING_CART_ACTIONS.UPDATE: {
       const { data } = action.payload;
-      let id = data.id;
+      let id = data.id.toString();
       const uOrderItems = [...state.orderItems];
       const orderItemIndex = state.orderItems.findIndex(
         (orderItem) => orderItem.id === id
       );
+      const orderedItem = new OrderItem(
+        data.id.toString(),
+        data.book,
+        data.quantity
+      );
       if (orderItemIndex === -1) {
-        updatedOrderItems.push(data);
+        uOrderItems.push(orderedItem);
       } else {
-        updatedOrderItems[orderItemIndex] = data;
+        uOrderItems[orderItemIndex] = orderedItem;
       }
 
       const totalPrice = computeTotalPrice(uOrderItems);
@@ -50,7 +55,7 @@ export function ShoppingCartReducer(state = null, action) {
       const orderItemIndex = state.orderItems.findIndex(
         (orderItem) => orderItem.id === deletedOrderItemId
       );
-      uOrderItems.splice(orderItemIndex);
+      uOrderItems.splice(orderItemIndex, 1);
       const totalPrice = computeTotalPrice(uOrderItems);
       return {
         ...state,

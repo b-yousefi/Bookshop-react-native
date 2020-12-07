@@ -54,7 +54,7 @@ export function authenticate(username, token) {
 }
 
 export function loginUser(username, password) {
-  const url = `${Vars.REACT_APP_API_URL}/authenticate`;
+  const url = `${Vars.REACT_APP_API_URL}/api/authenticate`;
   return async (dispatch) => {
     try {
       const response = await axios({
@@ -84,7 +84,7 @@ export function logoutUser() {
 }
 
 export function regsiterUser(user) {
-  const url = `${Vars.REACT_APP_API_URL}/register`;
+  const url = `${Vars.REACT_APP_API_URL}/api/register`;
   console.log(user);
   return async (dispatch) => {
     try {

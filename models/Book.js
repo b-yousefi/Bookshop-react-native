@@ -12,7 +12,8 @@ class Book {
     categoryIds,
     picture,
     price,
-    quantity
+    quantity,
+    _links
   ) {
     this.id = id.toString();
     this.name = name;
@@ -25,6 +26,7 @@ class Book {
     this.picture = picture;
     this.price = price;
     this.quantity = quantity;
+    this._links = _links;
   }
 
   get readablePublishedDay() {

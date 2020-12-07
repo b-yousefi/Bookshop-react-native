@@ -13,6 +13,7 @@ import {
 import DrawerHeaderButton from "../components/UI/DrawerHeaderButton";
 import BookItem from "../components/shop/BookItem";
 import * as booksActions from "../store/actions/actions_book";
+import * as cartActions from "../store/actions/actions_shopping_cart";
 import Colors from "../constants/Colors";
 import CartHeaderButton from "../components/UI/CartHeaderButton";
 
@@ -132,7 +133,7 @@ const StoreScreen = (props) => {
               color={Colors.primary}
               title="To Cart"
               onPress={() => {
-                // dispatch(cartActions.addToCart(itemData.item));
+                dispatch(cartActions.updateShoppingCart(itemData.item));
               }}
             />
           </View>
