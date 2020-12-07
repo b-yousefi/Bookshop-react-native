@@ -14,6 +14,7 @@ import DrawerHeaderButton from "../components/UI/DrawerHeaderButton";
 import BookItem from "../components/shop/BookItem";
 import * as booksActions from "../store/actions/actions_book";
 import Colors from "../constants/Colors";
+import CartHeaderButton from "../components/UI/CartHeaderButton";
 
 const StoreScreen = (props) => {
   const [page, setPage] = useState(1);
@@ -152,5 +153,6 @@ export const screenOptions = (navData) => {
   return {
     headerTitle: "Bookshop",
     headerLeft: () => <DrawerHeaderButton navigation={navData.navigation} />,
+    headerRight: () => <CartHeaderButton navigation={navData.navigation} />,
   };
 };

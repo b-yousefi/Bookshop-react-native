@@ -13,7 +13,6 @@ export function OrdersReducer(state = null, action) {
         const loadedData = [];
         for (const order of orders) {
           const orderObj = createOrderObj(order);
-          console.log(orderObj);
           loadedData.push(orderObj);
         }
         return loadedData;

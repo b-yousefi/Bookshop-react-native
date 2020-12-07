@@ -1,6 +1,10 @@
 import axios from "axios";
 import { AsyncStorage } from "react-native";
 import { setError, setSucc } from "./actions";
+import {
+  clearShoppingCart,
+  SHOPPING_CART_ACTIONS,
+} from "./actions_shopping_cart";
 import Vars from "../../env";
 
 const USER_URL = `${Vars.REACT_APP_API_URL}/api/users`;
@@ -30,6 +34,11 @@ export function fetchUser(username) {
       type: USER_ACTIONS.FETCH,
       payload: response,
     });
+
+    dispatch({
+      type: SHOPPING_CART_ACTIONS.FETCH,
+      payload: { data: response.data.openOrder },
+    });
   };
 }
 
@@ -40,6 +49,7 @@ export function authenticate(username, token) {
       type: USER_ACTIONS.LOGIN,
       payload: { username, token },
     });
+    dispatch(fetchUser(username));
   };
 }
 
@@ -55,7 +65,6 @@ export function loginUser(username, password) {
       const token = `Token ${response.data.token}`;
       saveDataToStorage(username, token);
       dispatch(authenticate(username, token));
-      dispatch(fetchUser(username));
     } catch (err) {
       throw err;
     }
@@ -70,6 +79,7 @@ export function logoutUser() {
       type: USER_ACTIONS.LOGOUT,
       payload: "",
     });
+    dispatch(clearShoppingCart());
   };
 }
 

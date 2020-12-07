@@ -44,6 +44,9 @@ import CategoryDetailScreen, {
 import OrdersScreen, {
   screenOptions as ordersScreenOptions,
 } from "../screens/OrdersScreen";
+import ShoppingCartScreen, {
+  screenOptions as shoppingCartScreenOptions,
+} from "../screens/ShoppingCartScreen";
 
 import * as userActions from "../store/actions/actions_user";
 
@@ -74,6 +77,11 @@ export const StoreNavigator = () => {
         name="BookDetail"
         component={BookDetailScreen}
         options={bookDetailScreenOptions}
+      />
+      <StoreStackNavigator.Screen
+        name="Cart"
+        component={ShoppingCartScreen}
+        options={shoppingCartScreenOptions}
       />
     </StoreStackNavigator.Navigator>
   );

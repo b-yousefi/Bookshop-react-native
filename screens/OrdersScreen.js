@@ -81,8 +81,8 @@ const OrdersScreen = (props) => {
     props.navigation.navigate({
       name: "OrderDetail",
       params: {
-        publicationId: id,
-        publicationTitle: title,
+        orderId: id,
+        orderTitle: title,
       },
     });
   };
@@ -98,14 +98,20 @@ const OrdersScreen = (props) => {
           totalPrice={itemData.item.totalPrice}
           date={itemData.item.readableUpdatedAt}
           onSelect={() => {
-            selectItemHandler(itemData.item.id, itemData.item.name);
+            selectItemHandler(
+              itemData.item.id,
+              itemData.item.readableUpdatedAt
+            );
           }}
         >
           <Button
             color={Colors.primary}
             title="View Details"
             onPress={() => {
-              selectItemHandler(itemData.item.id, itemData.item.name);
+              selectItemHandler(
+                itemData.item.id,
+                itemData.item.readableUpdatedAt
+              );
             }}
           />
         </OrderListItem>
