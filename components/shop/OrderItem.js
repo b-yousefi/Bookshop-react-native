@@ -66,7 +66,7 @@ const OrderItem = (props) => {
 const styles = StyleSheet.create({
   orderItemCard: {
     height: 150,
-    margin: 10,
+    margin: 5,
     padding: 5,
     width: "95%",
     alignSelf: "center",

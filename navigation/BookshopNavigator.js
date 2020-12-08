@@ -78,11 +78,6 @@ export const StoreNavigator = () => {
         component={BookDetailScreen}
         options={bookDetailScreenOptions}
       />
-      <StoreStackNavigator.Screen
-        name="Cart"
-        component={ShoppingCartScreen}
-        options={shoppingCartScreenOptions}
-      />
     </StoreStackNavigator.Navigator>
   );
 };
@@ -157,6 +152,20 @@ export const OrdersNavigator = () => {
         options={ordersScreenOptions}
       />
     </OrderStackNavigator.Navigator>
+  );
+};
+
+const CartStackNavigator = createStackNavigator();
+
+export const CartNavigator = () => {
+  return (
+    <CartStackNavigator.Navigator screenOptions={defaultStackNavOptions}>
+      <CartStackNavigator.Screen
+        name="Cart"
+        component={ShoppingCartScreen}
+        options={shoppingCartScreenOptions}
+      />
+    </CartStackNavigator.Navigator>
   );
 };
 
@@ -240,6 +249,19 @@ export const ShopNavigator = () => {
         component={PublicationsNavigator}
       />
       <ShopDrawerNavigator.Screen name="Orders" component={OrdersNavigator} />
+      <ShopDrawerNavigator.Screen
+        name="Cart"
+        component={CartNavigator}
+        options={{
+          drawerIcon: (props) => (
+            <Ionicons
+              name={Platform.OS === "android" ? "md-cart" : "ios-cart"}
+              size={23}
+              color={props.color}
+            />
+          ),
+        }}
+      />
       <ShopDrawerNavigator.Screen name="About" component={AboutNavigator} />
     </ShopDrawerNavigator.Navigator>
   );
