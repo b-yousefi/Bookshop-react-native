@@ -46,14 +46,18 @@ const OrderItem = (props) => {
                   </Text>
                   <Text style={styles.price}>Price: ${props.price}</Text>
                 </View>
-                <IconButton
-                  icon="delete-outline"
-                  color={Colors.red500}
-                  size={36}
-                  onPress={() => {
-                    dispatch(cartActions.deleteItemFromShoppingCart(props.id));
-                  }}
-                />
+                {props.isEditable && (
+                  <IconButton
+                    icon="delete-outline"
+                    color={Colors.red500}
+                    size={36}
+                    onPress={() => {
+                      dispatch(
+                        cartActions.deleteItemFromShoppingCart(props.id)
+                      );
+                    }}
+                  />
+                )}
               </View>
             </View>
           </View>

@@ -79,7 +79,7 @@ const OrdersScreen = (props) => {
 
   const selectItemHandler = (id, title) => {
     props.navigation.navigate({
-      name: "OrderDetail",
+      name: "OrderDetails",
       params: {
         orderId: id,
         orderTitle: title,
