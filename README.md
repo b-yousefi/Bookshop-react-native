@@ -13,14 +13,13 @@ Bookshop is the mobile application for an imaginary online bookshop, for the [bo
 
 ## Frameworks and Technologies
 
-- Development:
-  - Expo
-  - react-native
-  - react-navigation
-  - react-navigation-drawer
-  - react-navigation-stack
-  - react-redux
-  - redux-promise
-  - redux-thunk
-  - JavaScript
-  - CSS
+- Expo
+- react-native
+- react-navigation
+- react-navigation-drawer
+- react-navigation-stack
+- react-redux
+- redux-promise
+- redux-thunk
+- JavaScript
+- CSS
